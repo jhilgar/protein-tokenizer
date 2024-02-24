@@ -21,3 +21,13 @@ jobs:
           dockerfile_name: Dockerfile
           docker_options: "--no-cache"
           process_type: web
+      - name: Backend
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "protein-tokenizer"
+          email: ${{secrets.HEROKU_EMAIL_ADDRESS}}
+          dockerfile_directory: ./applications/backend
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
