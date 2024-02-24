@@ -44,7 +44,7 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 COPY --chown=node:node . .
 # Run the build script.
 RUN npm run build
-
+RUN npm install --save serve
 ################################################################################
 # Create a new stage to run the application with minimal runtime dependencies
 # where the necessary files are copied from the build stage.
@@ -71,4 +71,4 @@ COPY package.json .
 EXPOSE 3000
 
 # Run the application.
-CMD npm start
+CMD serve -s build
