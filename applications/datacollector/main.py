@@ -1,6 +1,7 @@
 import time
+import sys
 
-from applications.datacollector.datacollector import DataCollector
+from .datacollector import DataCollector
 from components.database.databasehandler import DatabaseHandler
 
 collector = DataCollector()
