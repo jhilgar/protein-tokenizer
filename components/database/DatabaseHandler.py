@@ -28,5 +28,3 @@ class Query(Base):
 
     def __repr__(self):
         return f"Query(id = {self.id!r}, name = {self.name!r})"
-    
-database = DatabaseHandler()
