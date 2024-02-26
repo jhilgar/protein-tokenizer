@@ -15,5 +15,7 @@ jobs:
             - uses: actions/checkout@v2
             - name: Add datacollector remote origin
               run: git remote add heroku-collector https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_COLLECTOR_APP_NAME }}.git
+            - name: Unshallow datacollector
+              run: git fetch --all --unshallow 
             - name: Deploy datacollector to Heroku
-              run: git push heroku-collector main --force
+              run: git push heroku-collector main
