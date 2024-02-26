@@ -3,7 +3,7 @@ import requests
 from requests.adapters import HTTPAdapter, Retry
 from fastapi import FastAPI
 
-from ...components.database import DatabaseHandler
+#from ...components.database import DatabaseHandler
 
 # Code adapted from uniprot.org/help/api_queries
 class DataCollector():
