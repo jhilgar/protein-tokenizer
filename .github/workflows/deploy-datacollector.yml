@@ -19,6 +19,8 @@ jobs:
               run: git remote add heroku-collector https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_COLLECTOR_APP_NAME }}.git
             - name: Deploy datacollector to Heroku
               run: |
+                git config user.name github-actions
+                git config user.email github-actions@github.com
                 echo "uvicorn applications/datacollector/DataCollector:app" > Procfile
                 mv applications/datacollector/requirements.txt .
                 git add .
