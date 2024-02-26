@@ -1,9 +1,8 @@
 import re
 import requests
 from requests.adapters import HTTPAdapter, Retry
-from fastapi import FastAPI
 
-#from ...components.database import DatabaseHandler
+from ...components.database import DatabaseHandler
 
 # Code adapted from uniprot.org/help/api_queries
 class DataCollector():
@@ -27,11 +26,7 @@ class DataCollector():
             yield response, total
             batch_url = DataCollector.get_next_link(response.headers)
 
-app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
 '''
 collector = DataCollector()
 url = 'https://rest.uniprot.org/uniprotkb/search?format=fasta&query=%28Insulin+AND+%28reviewed%3Atrue%29+AND+%28organism_id%3A9823%29%29&size=20'
