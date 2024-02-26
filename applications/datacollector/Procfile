@@ -1,2 +1,2 @@
 web: uvicorn applications.datacollector.endpoint:app --host 0.0.0.0 --port $PORT
-worker: python -m applications/datacollector/main.py
+worker: python -m applications/datacollector/main
