@@ -13,7 +13,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
+              with:
+                fetch-depth: 0
             - name: Add backend remote origin
               run: git remote add heroku-backend https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_BACKEND_APP_NAME }}.git
             - name: Deploy backend to Heroku
-              run: git push heroku-backend HEAD:refs/heads/main --force
+              run: git push heroku-backend main 
