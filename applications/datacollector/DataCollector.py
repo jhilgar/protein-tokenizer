@@ -1,8 +1,9 @@
+import io
 import re
 import requests
 from requests.adapters import HTTPAdapter, Retry
 
-from ...components.database import DatabaseHandler
+from Bio import SeqIO
 
 # Code adapted from uniprot.org/help/api_queries
 class DataCollector():
@@ -26,11 +27,7 @@ class DataCollector():
             yield response, total
             batch_url = DataCollector.get_next_link(response.headers)
 
-
-'''
-collector = DataCollector()
-url = 'https://rest.uniprot.org/uniprotkb/search?format=fasta&query=%28Insulin+AND+%28reviewed%3Atrue%29+AND+%28organism_id%3A9823%29%29&size=20'
-interactions = {}
-for batch, total in collector.get_batch(url):
-    print(batch.text)
-'''
+    def get_records(self, batch_url):
+        for batch, total in self.get_batch(batch_url):
+            for record in SeqIO.parse(io.StringIO(batch.text), "fasta"):
+                yield record.id, record.seq
