@@ -6,6 +6,7 @@ on:
             - main
         paths:
             - "applications/datacollector/**"
+            - "components/database/**"
             - ".github/workflows/deploy-datacollector.yml"
 
 jobs:
