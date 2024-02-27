@@ -6,7 +6,7 @@ from requests.adapters import HTTPAdapter, Retry
 
 from Bio import SeqIO
 
-from ...components.database.databasehandler import DatabaseHandler
+from components.database.databasehandler import DatabaseHandler
 
 # Code adapted from uniprot.org/help/api_queries
 class DataCollector():
