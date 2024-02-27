@@ -1,14 +1,26 @@
+import os
+
 import sqlalchemy as db
 from sqlalchemy.orm import declarative_base, Session
+from sqlalchemy_utils import database_exists, create_database
 
 Base = declarative_base()
 
 class DatabaseHandler():
     def __init__(self):
-        self.engine = db.create_engine("sqlite+pysqlite:///:memory:", echo = True)
+        if not "DATABASE_URL" in os.environ:
+            url = "postgresql://tokenizer:tokenizer@localhost:5432/tokenizer"
+        else:
+            url = os.getenv("DATABASE_URL")
+            
+        self.engine = db.create_engine(url, echo = True)
+        if not database_exists(self.engine.url):
+            create_database(self.engine.url)
         self.connection = self.engine.connect()
-        Base.metadata.create_all(self.engine)
         self.session = Session(self.engine)
+
+    def create_schema(self):
+        Base.metadata.create_all(self.engine)
 
     def insert_query(self, raw):
         query = Query(name = "test", raw = raw)

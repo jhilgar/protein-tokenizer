@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  postgres-api:
+    image: postgres:14.3
+    container_name: database
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: 'protein-tokenizer'
+      POSTGRES_USER: 'tokenizer'
+      POSTGRES_PASSWORD: 'tokenizer'
