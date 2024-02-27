@@ -16,12 +16,17 @@ class DatabaseHandler():
                 url = url.replace('postgres://', 'postgresql://')
 
         self.engine = db.create_engine(url, echo = True)
+
         if not database_exists(self.engine.url):
             create_database(self.engine.url)
+        
         self.connection = self.engine.connect()
         self.session = Session(self.engine)
 
-    def create_schema(self):
+    def drop_all(self):
+        Base.metadata.drop_all(self.engine)
+
+    def create_all(self):
         Base.metadata.create_all(self.engine)
 
     def insert_query(self, raw):
