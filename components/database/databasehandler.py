@@ -12,7 +12,9 @@ class DatabaseHandler():
             url = "postgresql://tokenizer:tokenizer@localhost:5432/tokenizer"
         else:
             url = os.getenv("DATABASE_URL")
-            
+            if url.startswith('postgres://'):
+                url = url.replace('postgres://', 'postgresql://')
+
         self.engine = db.create_engine(url, echo = True)
         if not database_exists(self.engine.url):
             create_database(self.engine.url)
