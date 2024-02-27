@@ -47,4 +47,4 @@ if (__name__ == "__main__"):
         handler.insert_dataset(query_id, str(seq))
 
     while(True):
-        time.sleep(1)
+        time.sleep(0.5)
