@@ -3,7 +3,6 @@ from sqlalchemy.orm import declarative_base, Session
 
 Base = declarative_base()
 
-# initialize session on instantiation?
 class DatabaseHandler():
     def __init__(self):
         self.engine = db.create_engine("sqlite+pysqlite:///:memory:", echo = True)
