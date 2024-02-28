@@ -3,7 +3,7 @@ import pika
 
 class RabbitHandler():
     def __init__(self):
-        if not "CLOUDAMQP" in os.environ:
+        if not "CLOUDAMQP_URL" in os.environ:
             url = 'localhost'
         else:
             url = os.getenv("CLOUDAMQP_URL")
