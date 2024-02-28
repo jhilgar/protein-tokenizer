@@ -6,6 +6,7 @@ on:
             - main
         paths:
             - "applications/backend/**"
+            - "components/queue/**"
             - ".github/workflows/deploy-backend.yml"
 
 jobs:
@@ -16,4 +17,11 @@ jobs:
             - name: Add backend remote origin
               run: git remote add heroku-backend https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_BACKEND_APP_NAME }}.git
             - name: Deploy backend to Heroku
-              run: git push heroku-backend `git subtree split --prefix applications/backend main`:refs/heads/main --force
+              run: |
+                git config user.name github-actions
+                git config user.email github-actions@github.com
+                mv applications/datacollector/Procfile ./
+                mv applications/datacollector/requirements.txt ./
+                git add .
+                git commit -a -m "Make buildpack hap hap happy"
+                git push heroku-collector main --force
