@@ -12,7 +12,7 @@ function App() {
       'url': 'https://rest.uniprot.org/uniprotkb/search?format=fasta&query=%28Insulin+AND+%28reviewed%3Atrue%29+AND+%28organism_id%3A9823%29+AND+%28length%3A%5B350+TO+400%5D%29%29&size=500'
     }
 
-    var backend_url = process.env.REACT_APP_BACKEND_URL
+    var backend_url = import.meta.env.VITE_BACKEND_URL
 
     fetch(backend_url,
     { method: 'POST', 
