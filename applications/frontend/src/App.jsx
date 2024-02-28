@@ -12,9 +12,9 @@ function App() {
       'url': 'https://rest.uniprot.org/uniprotkb/search?format=fasta&query=%28Insulin+AND+%28reviewed%3Atrue%29+AND+%28organism_id%3A9823%29+AND+%28length%3A%5B350+TO+400%5D%29%29&size=500'
     }
 
-    var backend_url = import.meta.env.VITE_BACKEND_URL
+    console.log(import.meta.env.VITE_BACKEND_URL)
 
-    fetch(backend_url,
+    fetch(import.meta.env.VITE_BACKEND_URL,
     { method: 'POST', 
     mode: 'cors', 
     headers: {
@@ -27,7 +27,7 @@ function App() {
   };
 
   useEffect(() => {
-    const eventSource = new EventSource(backend_url + "/stream");
+    const eventSource = new EventSource(import.meta.env.VITE_BACKEND_URL + "/stream");
     eventSource.onopen = () => { };
     eventSource.onerror = (e) => console.log("error connecting to backend", e);
     eventSource.onmessage = (data) => console.log("backend message:", data.data);
