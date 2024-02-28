@@ -6,7 +6,7 @@ class RabbitHandler():
         if not "CLOUDAMQP" in os.environ:
             url = 'localhost'
         else:
-            url = os.getenv("CLOUDAMQP")
+            url = os.getenv("CLOUDAMQP_URL")
 
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(url))
 
