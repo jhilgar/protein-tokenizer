@@ -1,1 +1,1 @@
-web: uvicorn applications.backend.main:fastapi --host 0.0.0.0 --port $PORT
+web: uvicorn applications.backend.main:fastapi --host 0.0.0.0 --port ${PORT}
