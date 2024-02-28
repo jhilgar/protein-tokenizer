@@ -4,11 +4,12 @@ import pika
 class RabbitHandler():
     def __init__(self):
         if not "CLOUDAMQP_URL" in os.environ:
-            url = 'localhost'
+            url = 'amqps://localhost:guest@guest/'
         else:
             url = os.getenv("CLOUDAMQP_URL")
 
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(url))
+        params = pika.URLParameters(url)
+        self.connection = pika.BlockingConnection(params)
 
     def channel(self):
         return self.connection.channel()
