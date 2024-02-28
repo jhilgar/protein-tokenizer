@@ -11,12 +11,12 @@ function App() {
     var jsonData = {
       'url': 'https://rest.uniprot.org/uniprotkb/search?format=fasta&query=%28Insulin+AND+%28reviewed%3Atrue%29+AND+%28organism_id%3A9823%29+AND+%28length%3A%5B350+TO+400%5D%29%29&size=500'
     }
-
+    
+    var backend_url = 'http://localhost:8000/search'
     if(process.env.BACKEND_URL) { 
-      var backend_url = 'https://protein-tokenizer-frontend-2bb798acd361.herokuapp.com/'}
-    else { 
-      var backend_url = 'http://localhost:8000/search'
+      backend_url = 'https://protein-tokenizer-frontend-2bb798acd361.herokuapp.com/'
     }
+    
 
     fetch(backend_url,
     { method: 'POST', 
