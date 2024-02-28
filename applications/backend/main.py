@@ -58,9 +58,10 @@ async def lifespan(app: FastAPI):
     rabbit.close()
 
 fastapi = FastAPI(lifespan = lifespan)
+origins = ["https://protein-tokenizer-backend-71ef9c57306e.herokuapp.com", "http://localhost:8000"]
 fastapi.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
