@@ -10,3 +10,9 @@ services:
       POSTGRES_DB: 'protein-tokenizer'
       POSTGRES_USER: 'tokenizer'
       POSTGRES_PASSWORD: 'tokenizer'
+  rabbitmq:
+    image: rabbitmq:3.10.5-management
+    container_name: rabbit
+    ports:
+      - '5672:5672'
+      - '15672:15672'

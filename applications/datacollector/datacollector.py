@@ -1,20 +1,49 @@
 import io
+import os
 import re
+import sys
 import time
 import requests
 from requests.adapters import HTTPAdapter, Retry
 
+import pika
 from Bio import SeqIO
 
 from components.database.databasehandler import DatabaseHandler
+from components.queue.rabbithandler import RabbitHandler
 
-# Code adapted from uniprot.org/help/api_queries
 class DataCollector():
     re_next_link = re.compile(r'<(.+)>; rel="next"')
 
     def __init__(self):
+        self.handler = DatabaseHandler()
         self.session = requests.Session()
         self.session.mount("https://", HTTPAdapter())
+
+        self.handler.drop_all()
+        self.handler.create_all()
+
+        self.rabbit = RabbitHandler()
+        self.rx = self.rabbit.channel()
+        self.rx.queue_declare(queue = 'bd')
+        self.rx.basic_consume(queue = 'bd', auto_ack = True, on_message_callback = self.callback)
+
+        self.tx = self.rabbit.channel()
+        self.tx.queue_declare(queue = 'db')
+
+    def start(self):
+        self.rx.start_consuming()
+
+    def stop(self):
+        self.rabbit.close()
+
+    def callback(self, ch, method, properties, body):
+        self.tx.basic_publish(exchange = '', routing_key='db', body='DataCollector: received url from backend')
+        query_id = self.handler.insert_query(body)
+
+        for id, seq in self.get_records(body):
+            self.handler.insert_dataset(query_id, str(seq))
+            self.tx.basic_publish(exchange = '', routing_key='db', body='DataCollector: search query completed')
 
     def get_next_link(headers):
         if "Link" in headers:
@@ -35,19 +64,14 @@ class DataCollector():
             for record in SeqIO.parse(io.StringIO(batch.text), "fasta"):
                 yield record.id, record.seq
 
-if (__name__ == "__main__"):
-    collector = DataCollector()
-    handler = DatabaseHandler()
-
-    handler.drop_all()
-    handler.create_all()
-
-    url = 'https://rest.uniprot.org/uniprotkb/search?format=fasta&query=%28Insulin+AND+%28reviewed%3Atrue%29+AND+%28organism_id%3A9823%29+AND+%28length%3A%5B350+TO+400%5D%29%29&size=500'
-
-    query_id = handler.insert_query(url)
-
-    for id, seq in collector.get_records(url):
-        handler.insert_dataset(query_id, str(seq))
-
-    while(True):
-        time.sleep(0.5)
+if __name__ == "__main__":
+    try:
+        datacollector = DataCollector()
+        datacollector.start()
+        datacollector.stop()
+    except KeyboardInterrupt:
+        datacollector.stop()
+        try:
+            sys.exit(0)
+        except:
+            os._exit(0)
