@@ -14,7 +14,7 @@ function App() {
 
     console.log(import.meta.env.VITE_BACKEND_URL)
 
-    fetch(import.meta.env.VITE_BACKEND_URL,
+    fetch(import.meta.env.VITE_BACKEND_URL + "/search",
     { method: 'POST', 
     mode: 'cors', 
     headers: {
