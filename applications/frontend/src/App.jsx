@@ -11,10 +11,10 @@ function App() {
     var jsonData = {
       'url': 'https://rest.uniprot.org/uniprotkb/search?format=fasta&query=%28Insulin+AND+%28reviewed%3Atrue%29+AND+%28organism_id%3A9823%29+AND+%28length%3A%5B350+TO+400%5D%29%29&size=500'
     }
-    
+
     var backend_url = 'http://localhost:8000/search'
-    if(process.env.BACKEND_URL) { 
-      backend_url = 'https://protein-tokenizer-frontend-2bb798acd361.herokuapp.com/'
+    if("BACKEND_URL" in process.env) { 
+      backend_url = 'https://protein-tokenizer-frontend-2bb798acd361.herokuapp.com'
     }
     
 
@@ -31,7 +31,7 @@ function App() {
   };
 
   useEffect(() => {
-    const eventSource = new EventSource("http://localhost:8000/stream");
+    const eventSource = new EventSource(backend_url + "/stream");
     eventSource.onopen = () => { };
     eventSource.onerror = (e) => console.log("error connecting to backend", e);
     eventSource.onmessage = (data) => console.log("backend message:", data.data);
