@@ -21,6 +21,9 @@ rabbit = RabbitHandler()
 tx = rabbit.channel()
 tx.queue_declare('bd')
 
+rx = rabbit.channel()
+rx.queue_declare('db')
+
 class Listener(threading.Thread):
     def __init__(self):
         super(Listener, self).__init__()
@@ -30,16 +33,8 @@ class Listener(threading.Thread):
         self._is_interrupted = True
 
     def run(self):
-        global rabbit
-        global current_message
-        if not "CLOUDAMQP_URL" in os.environ:
-            url = "localhost"
-        else:
-            url = os.getenv("CLOUDAMQP_URL")
-            
-        channel = rabbit.channel()
-        channel.queue_declare(queue = 'db')
-        for message in channel.consume(queue = 'db', auto_ack = True, inactivity_timeout = 1):
+        global rx
+        for message in rx.consume(queue = 'db', auto_ack = True, inactivity_timeout = 0.5):
             if self._is_interrupted:
                 break
             if not all(message):
@@ -73,7 +68,7 @@ async def search(request: SearchRequest):
     global current_message
     current_message = "search request received from frontend"
     print(request.url)
-    tx.basic_publish(exchange='', routing_key='bd', body=request.url)
+    await tx.basic_publish(exchange='', routing_key='bd', body=request.url)
     return request
 
 @fastapi.get("/stream")
