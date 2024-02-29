@@ -6,7 +6,7 @@ class RabbitHandler():
         if not "CLOUDAMQP_URL" in os.environ:
             url = 'amqp://localhost:guest@guest/'
         else:
-            url = os.getenv("CLOUDAMQP_URL")
+            url = 'amqp://qwfsjbke:gCsf0__NzULPgGx-ES_-z5p8oEDscsD8@woodpecker.rmq.cloudamqp.com/qwfsjbke'
 
         params = pika.URLParameters(url)
         self.connection = pika.BlockingConnection(params)
