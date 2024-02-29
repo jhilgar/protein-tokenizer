@@ -2,11 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import protein from './assets/protein.svg'
 import uniprot from './assets/uniprot.svg'
 import './App.css'
-import 'semantic-ui-css/semantic.min.css'
 
 import { Console, Hook, Unhook } from 'console-feed'
-
-import { CardContent, Card, Icon } from 'semantic-ui-react'
 
 function App() {
   const handleClick = () => { 
