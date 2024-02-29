@@ -18,9 +18,7 @@ current_message = None
 previous_message = None
 
 rabbit = RabbitHandler()
-print(rabbit.connection)
 tx = rabbit.channel()
-print(tx)
 tx.queue_declare('bd')
 
 class Listener(threading.Thread):
