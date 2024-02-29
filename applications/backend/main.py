@@ -1,3 +1,4 @@
+import os
 import asyncio
 from fastapi import Request, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,7 +14,12 @@ class SearchRequest(BaseModel):
 current_message = None
 previous_message = None
 
-router = RabbitRouter("amqp://guest:guest@localhost:5672/")
+if not "CLOUDAMQP_URL" in os.environ:
+    url = 'amqp://localhost:guest@guest/'
+else:
+    url = os.getenv("CLOUDAMQP_URL")
+
+router = RabbitRouter(url)
 
 app = FastAPI(lifespan = router.lifespan_context)
 app.include_router(router)
