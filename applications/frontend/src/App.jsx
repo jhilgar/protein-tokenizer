@@ -62,8 +62,8 @@ function App() {
         </a>
       </div>
       <h1>Protein tokenizer</h1>
-      A WIP
-        <button type="submit" onClick={handleClick}>Search</button>
+      <p>A WIP</p>
+      <button type="submit" onClick={handleClick}>Search</button>
     </>
   )
 }

@@ -45,7 +45,7 @@ app.add_middleware(
 @router.subscriber("backend")
 async def backend(message: StatusMessage):
     global current_message
-    current_message = json.loads(message)
+    current_message = message
 
 @app.post("/search")
 async def search(request: SearchRequest):
