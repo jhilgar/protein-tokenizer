@@ -10,6 +10,13 @@ from pydantic import BaseModel
 class SearchRequest(BaseModel):
     url: str
 
+class StatusMessage(BaseModel):
+    source: str
+
+class DatacollectorStatus(StatusMessage):
+    query_id: int
+    num_results: int
+
 current_message = None
 previous_message = None
 
@@ -36,9 +43,9 @@ app.add_middleware(
     )
 
 @router.subscriber("backend")
-async def backend(data):
+async def backend(message: StatusMessage):
     global current_message
-    current_message = json.loads(data)
+    current_message = json.loads(message)
 
 @app.post("/search")
 async def search(request: SearchRequest):
