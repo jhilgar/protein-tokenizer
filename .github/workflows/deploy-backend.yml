@@ -4,10 +4,6 @@ on:
     push:
         branches:
             - main
-        paths:
-            - "applications/backend/**"
-            - "components/queue/**"
-            - ".github/workflows/deploy-backend.yml"
 
 jobs:
     deploy:
