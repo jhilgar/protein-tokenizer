@@ -51,6 +51,11 @@ function App() {
     return () => Unhook(hookedConsole)
   }, [])
 
+  const description = [
+    'Aasdfy.',
+    'Shasdfk.',
+  ].join(' ')
+
   return (
     <>
     <div id = "logs" style={{height: "100px", overflow: "auto" }}>
