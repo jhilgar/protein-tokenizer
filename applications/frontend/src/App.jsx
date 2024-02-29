@@ -6,6 +6,8 @@ import 'semantic-ui-css/semantic.min.css'
 
 import { Console, Hook, Unhook } from 'console-feed'
 
+import { CardContent, Card, Icon } from 'semantic-ui-react'
+
 function App() {
   const handleClick = () => { 
     var searchQuery = {
