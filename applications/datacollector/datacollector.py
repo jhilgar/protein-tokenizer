@@ -25,11 +25,11 @@ class DataCollector():
 
         self.rabbit = RabbitHandler()
         self.rx = self.rabbit.channel()
-        self.rx.queue_declare(queue = 'bd')
-        self.rx.basic_consume(queue = 'bd', auto_ack = True, on_message_callback = self.callback)
+        self.rx.queue_declare(queue = 'search')
+        self.rx.basic_consume(queue = 'search', auto_ack = True, on_message_callback = self.callback)
 
         self.tx = self.rabbit.channel()
-        self.tx.queue_declare(queue = 'db')
+        self.tx.queue_declare(queue = 'backend')
 
     def start(self):
         self.rx.start_consuming()
@@ -38,12 +38,12 @@ class DataCollector():
         self.rabbit.close()
 
     def callback(self, ch, method, properties, body):
-        self.tx.basic_publish(exchange = '', routing_key='db', body='DataCollector: received url from backend')
+        self.tx.basic_publish(exchange = '', routing_key='backend', body='DataCollector: received url from backend')
         query_id = self.handler.insert_query(body)
 
         for id, seq in self.get_records(body):
             self.handler.insert_dataset(query_id, str(seq))
-            self.tx.basic_publish(exchange = '', routing_key='db', body='DataCollector: search query completed')
+            self.tx.basic_publish(exchange = '', routing_key='backend', body='DataCollector: search query completed')
 
     def get_next_link(headers):
         if "Link" in headers:

@@ -2,10 +2,8 @@ import os
 import asyncio
 from fastapi import Request, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from faststream.rabbit.fastapi import RabbitRouter, Logger
-
+from faststream.rabbit.fastapi import RabbitRouter
 from sse_starlette.sse import EventSourceResponse
-
 from pydantic import BaseModel
 
 class SearchRequest(BaseModel):
@@ -36,8 +34,8 @@ app.add_middleware(
     expose_headers=["*"],
     )
 
-@router.subscriber("main")
-async def hello(data, logger: Logger):
+@router.subscriber("backend")
+async def backend(data):
     global current_message
     current_message = data.decode('utf-8')
 
