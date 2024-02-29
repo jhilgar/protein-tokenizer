@@ -48,11 +48,6 @@ function App() {
     return () => Unhook(hookedConsole)
   }, [])
 
-  const description = [
-    'Aasdfy.',
-    'Shasdfk.',
-  ].join(' ')
-
   return (
     <>
     <div id = "logs" style={{height: "100px", overflow: "auto" }}>
@@ -69,13 +64,6 @@ function App() {
       <h1>Protein tokenizer</h1>
       <p>A WIP</p>
       <button type="submit" onClick={handleClick}>Search</button>
-      <Card>
-    <CardContent header='asdf' />
-    <CardContent description={description} />
-    <CardContent extra>
-      📦 0 entries
-    </CardContent>
-  </Card>
     </>
   )
 }
