@@ -2,7 +2,7 @@ import io
 import os
 import re
 import sys
-import time
+import json
 import requests
 from requests.adapters import HTTPAdapter, Retry
 
@@ -38,12 +38,17 @@ class DataCollector():
         self.rabbit.close()
 
     def callback(self, ch, method, properties, body):
-        self.tx.basic_publish(exchange = '', routing_key='backend', body='DataCollector: received url from backend')
         query_id = self.handler.insert_query(body)
 
         for id, seq in self.get_records(body):
             self.handler.insert_dataset(query_id, str(seq))
-            self.tx.basic_publish(exchange = '', routing_key='backend', body='DataCollector: search query completed')
+            
+        body = { 
+            "source": "datacollector", 
+            "query_id": query_id, 
+            "num_results": self.handler.get_num_query_results(query_id)
+            }
+        self.tx.basic_publish(exchange = '', routing_key='backend', body=json.dumps(body))
 
     def get_next_link(headers):
         if "Link" in headers:

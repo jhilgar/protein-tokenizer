@@ -1,4 +1,5 @@
 import os
+import json
 import asyncio
 from fastapi import Request, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -37,7 +38,7 @@ app.add_middleware(
 @router.subscriber("backend")
 async def backend(data):
     global current_message
-    current_message = data.decode('utf-8')
+    current_message = json.loads(data)
 
 @app.post("/search")
 async def search(request: SearchRequest):
