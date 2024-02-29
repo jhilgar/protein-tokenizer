@@ -55,14 +55,14 @@ function App() {
       </div>
       <div>
         <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="UniProt logo" />
+          <img src={uniprot} className="logo" alt="UniProt logo" />
         </a>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      
+      <h1>Protein tokenizer</h1>
+      A WIP
         <button type="submit" onClick={handleClick}>Search</button>
     </>
   )
