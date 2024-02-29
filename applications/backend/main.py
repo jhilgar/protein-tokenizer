@@ -61,6 +61,7 @@ fastapi.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 @fastapi.post("/search")
@@ -69,7 +70,7 @@ async def search(request: SearchRequest):
     global current_message
     current_message = "search request received from frontend"
     print(request.url)
-    await tx.basic_publish(exchange='', routing_key='bd', body=request.url)
+    tx.basic_publish(exchange='', routing_key='bd', body=request.url)
     return request
 
 @fastapi.get("/stream")
