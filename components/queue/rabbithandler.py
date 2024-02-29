@@ -8,7 +8,6 @@ class RabbitHandler():
         else:
             url = os.getenv("CLOUDAMQP_URL")
 
-        print(f"using {url} to connecto to cloud amqp")
         params = pika.URLParameters(url)
         self.connection = pika.BlockingConnection(params)
 
