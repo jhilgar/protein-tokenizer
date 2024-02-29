@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import protein from './assets/protein.svg'
 import uniprot from './assets/uniprot.svg'
 import './App.css'
+import 'semantic-ui-css/semantic.min.css'
 
 import { Console, Hook, Unhook } from 'console-feed'
 
@@ -64,6 +65,13 @@ function App() {
       <h1>Protein tokenizer</h1>
       <p>A WIP</p>
       <button type="submit" onClick={handleClick}>Search</button>
+      <Card>
+    <CardContent header='asdf' />
+    <CardContent description={description} />
+    <CardContent extra>
+      📦 0 entries
+    </CardContent>
+  </Card>
     </>
   )
 }
