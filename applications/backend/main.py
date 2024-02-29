@@ -27,7 +27,7 @@ class Listener(threading.Thread):
         self._is_interrupted = False
         self.rabbit = RabbitHandler()
         self.rx = rabbit.channel()
-        self.rx.quequeue_declare('db')
+        self.rx.queue_declare('db')
 
     def stop(self):
         self._is_interrupted = True
