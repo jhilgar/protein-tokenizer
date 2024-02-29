@@ -4,25 +4,16 @@ on:
     push:
         branches:
             - main
-        paths:
-          - "applications/backend/**"
-          - "components/**"
-          - ".github/workflows/deploy-backend.yml"
+
 jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
+            - name: Deploy to Heroku
+              uses: AkhileshNS/heroku-deploy@v3.13.15
               with:
-                fetch-depth: 0
-            - name: Add backend remote origin
-              run: git remote add heroku-backend https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/${{ secrets.HEROKU_BACKEND_APP_NAME }}.git
-            - name: Deploy backend to Heroku
-              run: |
-                git config user.name github-actions
-                git config user.email github-actions@github.com
-                mv applications/backend/Procfile ./
-                mv applications/backend/requirements.txt ./
-                git add .
-                git commit -a -m "Make buildpack hap hap happy"
-                git push heroku-backend main --force
+                heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+                heroku_app_name: ${{ secrets.HEROKU_BACKEND_APP_NAME }}
+                heroku_email: ${{ secrets.HEROKU_EMAIL }}
+                procfile: "web: uvicorn applications.backend:app --host 0.0.0.0 --port ${PORT}"
