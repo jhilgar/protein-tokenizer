@@ -68,7 +68,7 @@ async def search(request: SearchRequest):
     global current_message
     current_message = "search request received from frontend"
     print(request.url)
-    await tx.basic_publish(exchange='', routing_key='bd', body=request.url)
+    tx.basic_publish(exchange='', routing_key='bd', body=request.url)
     return request
 
 @fastapi.get("/stream")
