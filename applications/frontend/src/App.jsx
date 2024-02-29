@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import uniprot from './assets/uniprot.svg'
 import './App.css'
 
 import { Console, Hook, Unhook } from 'console-feed'
@@ -55,7 +55,7 @@ function App() {
       </div>
       <div>
         <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+          <img src={viteLogo} className="logo" alt="UniProt logo" />
         </a>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
