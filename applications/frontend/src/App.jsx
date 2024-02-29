@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import reactLogo from './assets/react.svg'
+import protein from './assets/protein.svg'
 import uniprot from './assets/uniprot.svg'
 import './App.css'
 
@@ -58,7 +58,7 @@ function App() {
           <img src={uniprot} className="logo" alt="UniProt logo" />
         </a>
         <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+          <img src={protein} className="logo react" alt="Protein logo" />
         </a>
       </div>
       <h1>Protein tokenizer</h1>

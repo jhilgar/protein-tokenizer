@@ -42,6 +42,7 @@ async def backend(data):
 
 @app.post("/search")
 async def search(request: SearchRequest):
+    print(request)
     await router.broker.publish(request.url, "datacollector")
     return request
 
