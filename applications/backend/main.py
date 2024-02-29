@@ -21,20 +21,21 @@ rabbit = RabbitHandler()
 tx = rabbit.channel()
 tx.queue_declare('bd')
 
-rx = rabbit.channel()
-rx.queue_declare('db')
-
 class Listener(threading.Thread):
     def __init__(self):
         super(Listener, self).__init__()
         self._is_interrupted = False
+        self.rabbit = RabbitHandler()
+        self.rx = rabbit.channel()
+        self.rx.quequeue_declare('db')
 
     def stop(self):
         self._is_interrupted = True
+        self.rabbit.close()
 
     def run(self):
-        global rx
-        for message in rx.consume(queue = 'db', auto_ack = True, inactivity_timeout = 0.5):
+        global current_message
+        for message in self.rx.consume(queue = 'db', auto_ack = True, inactivity_timeout = 0.5):
             if self._is_interrupted:
                 break
             if not all(message):
