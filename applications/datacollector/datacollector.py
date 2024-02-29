@@ -25,8 +25,8 @@ class DataCollector():
 
         self.rabbit = RabbitHandler()
         self.rx = self.rabbit.channel()
-        self.rx.queue_declare(queue = 'search')
-        self.rx.basic_consume(queue = 'search', auto_ack = True, on_message_callback = self.callback)
+        self.rx.queue_declare(queue = 'datacollector')
+        self.rx.basic_consume(queue = 'datacollector', auto_ack = True, on_message_callback = self.callback)
 
         self.tx = self.rabbit.channel()
         self.tx.queue_declare(queue = 'backend')

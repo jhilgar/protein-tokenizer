@@ -41,7 +41,7 @@ async def backend(data):
 
 @app.post("/search")
 async def search(request: SearchRequest):
-    await router.broker.publish(request.url, "search")
+    await router.broker.publish(request.url, "datacollector")
     return request
 
 @app.get("/stream")
@@ -56,6 +56,5 @@ async def stream(request: Request):
                 previous_message = current_message
                 yield current_message
             
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(0.05)
     return EventSourceResponse(event_generator())
-
