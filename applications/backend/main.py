@@ -18,6 +18,7 @@ current_message = None
 previous_message = None
 
 rabbit = RabbitHandler()
+print(RabbitHandler.connection)
 tx = rabbit.channel()
 tx.queue_declare('bd')
 
@@ -35,7 +36,7 @@ class Listener(threading.Thread):
 
     def run(self):
         global current_message
-        for message in self.rx.consume(queue = 'db', auto_ack = True, inactivity_timeout = 0.5):
+        for message in self.rx.consume(queue = 'db', auto_ack = True, inactivity_timeout = 0.1):
             if self._is_interrupted:
                 break
             if not all(message):
