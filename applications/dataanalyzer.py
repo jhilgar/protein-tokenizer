@@ -48,4 +48,5 @@ async def dataanalyzer_train_command(message: TrainCommand) -> TokenizerResults:
         query_id = message.query_id,
         tokenizer_json = tokenizer.to_str(pretty = True)
     )
+    print(tokenizer_results)
     return tokenizer_results
