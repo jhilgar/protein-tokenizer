@@ -47,4 +47,4 @@ async def stream(message: Request):
                 yield messages.pop(0).model_dump_json()
             
             await asyncio.sleep(0.01)
-    return EventSourceResponse(event_generator())
+    return EventSourceResponse(event_generator(), ping = 5)
