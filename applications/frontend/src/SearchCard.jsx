@@ -64,7 +64,6 @@ export default function SearchCard({ entries }) {
                             label="UniProtKB query"
                             id="searchfield"
                             size="small"
-                            disabled
                             value="kappa immunoglobulin human"
                             style={{ width: 365 }}
                         />
