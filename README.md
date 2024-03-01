@@ -8,6 +8,8 @@ A small web application. Protein tokenizer fetches protein amino acid sequences 
 
 - make
 - python
+- virtualenv
+- pip
 - node
 
 **setup**

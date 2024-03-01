@@ -7,7 +7,7 @@ from components.api_queue import setup_app
 
 class DataAnalyzer():
     def get_tokenizer(type, params):
-        if type == 'BPE':
+        if type == "BPE":
             tokenizer = tk.Tokenizer(tk.models.BPE(unk_token = params["unk_token"]))
             trainer = tk.trainers.BpeTrainer(
                 vocab_size = params["vocab_size"], 
@@ -25,7 +25,6 @@ class DataAnalyzer():
 
 app, router = setup_app()
 datahandler = DatabaseHandler()
-
 @router.subscriber("dataanalyzer_train")
 @router.publisher("backend_tokenizer_results")
 async def dataanalyzer_train_command(message: TrainCommand) -> TokenizerResults:
@@ -48,5 +47,4 @@ async def dataanalyzer_train_command(message: TrainCommand) -> TokenizerResults:
         query_id = message.query_id,
         tokenizer_json = tokenizer.to_str(pretty = True)
     )
-    print(tokenizer_results)
     return tokenizer_results
