@@ -38,10 +38,11 @@ class DataCollector():
 
     def get_records(self, batch_url):
         query_id = self.handler.insert_query(batch_url)
-        for batch, total in self.get_batch(batch_url):
-            for record in SeqIO.parse(io.StringIO(batch.text), "fasta"):
+        for batch, _ in self.get_batch(batch_url):
+            for count, record in enumerate(SeqIO.parse(io.StringIO(batch.text), "fasta")):
                 self.handler.insert_dataset(query_id, str(record.seq))
-        return (query_id, total)
+            break
+        return (query_id, count + 1)
 
 app, router = setup_app()
 datacollector = DataCollector()
@@ -49,9 +50,10 @@ datacollector = DataCollector()
 @router.subscriber("datacollector_url")
 @router.publisher("backend_query_results")
 async def datacollector_url(message: SearchRequest) -> QueryResults:
-    query_id, num_results = datacollector.get_records(message.url)
+    print("yell")
+    query_id, num_results = datacollector.get_records(message.query)
     query_results = QueryResults(
-        timestamp = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
+        destination = "backend",
         source = "datacollector",
         query_id = query_id,
         num_results = num_results

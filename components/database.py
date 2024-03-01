@@ -47,8 +47,8 @@ class DatabaseHandler():
         )
     
     def get_query_results(self, query_id):
-        stmt = db.select(Dataset).where(Dataset.query.in_([query_id]))
-        return self.session.scalars(stmt)
+        stmt = db.select(Dataset.fasta).where(Dataset.query == query_id)
+        return self.session.scalars(stmt).all()
     
     def get_num_dataset(self):
         return self.session.scalar(

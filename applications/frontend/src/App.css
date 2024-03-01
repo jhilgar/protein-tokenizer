@@ -6,7 +6,7 @@
 }
 
 .logo {
-  height: 12em;
+  height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
@@ -21,7 +21,7 @@
 }
 
 .rotate {
-  animation: rotation 15s infinite linear;
+  animation: rotation 30s infinite linear;
 }
 
 @keyframes rotation {
