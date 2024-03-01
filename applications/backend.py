@@ -40,11 +40,15 @@ async def train(message: TrainCommand):
 @app.get("/stream")
 async def stream(message: Request):
     async def event_generator():
-        while True:
-            if await message.is_disconnected():
-                break
-            if messages:
-                yield messages.pop(0).model_dump_json()
+        try:
+            while True:
+                if await message.is_disconnected():
+                    break
+                if messages:
+                    yield messages.pop(0).model_dump_json()
+                await asyncio.sleep(0.9)
+        except asyncio.CancelledError as e:
+            raise e
             
-            await asyncio.sleep(0.1)
+            
     return EventSourceResponse(event_generator(), ping = 1, send_timeout=10)
