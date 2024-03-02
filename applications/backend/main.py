@@ -27,7 +27,6 @@ async def search(message: SearchRequest):
     message.query = url
     await router.broker.publish(message, "datacollector_url")
 
-    messages.append(message)
     return message
 
 @app.post("/train")
@@ -48,6 +47,5 @@ async def stream(message: Request):
                 await asyncio.sleep(0.9)
         except asyncio.CancelledError as e:
             raise e
-            
             
     return EventSourceResponse(event_generator(), ping = 1, send_timeout=10)

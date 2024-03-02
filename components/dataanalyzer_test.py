@@ -2,7 +2,7 @@ import pytest
 
 import tokenizers as tk
 
-from .dataanalyzer import DataAnalyzer
+from components.dataanalyzer import DataAnalyzer
 
 def test_prune_sequences():
     weird_input = 5

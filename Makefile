@@ -54,9 +54,18 @@ endif
 run/dataanalyzer:
 ifeq ($(OS),Windows_NT)
 	.\.venv\Scripts\activate && \
-	uvicorn applications.dataanalyzer.main:app --host 0.0.0.0 --port 8000
+	uvicorn applications.dataanalyzer.main:app --host 0.0.0.0 --port 8080
 else
 	source .venv/bin/activate && \
-	uvicorn applications.dataanalyzer.main:app --host 0.0.0.0 --port 8000
+	uvicorn applications.dataanalyzer.main:app --host 0.0.0.0 --port 8080
 endif
 
+.PHONY: make run/datacollector
+run/datacollector:
+ifeq ($(OS),Windows_NT)
+	.\.venv\Scripts\activate && \
+	uvicorn applications.datacollector.main:app --host 0.0.0.0 --port 8888
+else
+	source .venv/bin/activate && \
+	uvicorn applications.datacollector.main:app --host 0.0.0.0 --port 8888
+endif
