@@ -1,7 +1,5 @@
 import asyncio
 import urllib
-from typing import Callable
-
 
 from sse_starlette.sse import EventSourceResponse
 from fastapi import Request, Response
@@ -23,6 +21,7 @@ app, router = setup_app()
 async def backend_tokenizer_results(message: TokenizerResults):
     num_messages_received.inc()
     messages.append(message)
+    return message
 
 @router.subscriber("backend_query_results")
 async def backend_query_results(message: QueryResults):

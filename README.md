@@ -40,4 +40,6 @@ A small web application. Protein tokenizer fetches protein amino acid sequences 
 
 ## project info
 
-todo
+Components: This application is composed of four major components: a ReactJS frontend, a FastAPI backend, a data collector, and a data analyzer. The latter three services communicate with one another via AMQP (RabbitMQ). The frontend sends messages to the backend via a simple REST API and the backend responds aysnchronously through server-sent events. Data in the form of search queries and search results are stored in a Postgres database. Endpoints are exposed for service monitoring, which is handled by Prometheus.
+
+![Application Framework](application_framework.png)
