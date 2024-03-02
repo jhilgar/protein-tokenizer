@@ -1,5 +1,5 @@
 import os
-from fastapi import Request, FastAPI
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from faststream.rabbit.fastapi import RabbitRouter
 

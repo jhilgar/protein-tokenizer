@@ -24,7 +24,7 @@ A small web application. Protein tokenizer fetches protein amino acid sequences 
 
 - first start rabbitmq and postgres
 
-`docker compuse up`
+`docker compose up`
 
 - run the services
 
@@ -35,6 +35,8 @@ A small web application. Protein tokenizer fetches protein amino acid sequences 
 `make run dataanalyzer`
 
 `make run frontend`
+
+- navigate to the frontend web address
 
 ## project info
 
