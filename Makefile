@@ -6,7 +6,7 @@ default: help
 
 .PHONY: help
 help:
-	@echo commands: install, test, and run [frontend, backend, dataanalyzer, datacollector]
+	@echo commands: install, test/ or run/[frontend, backend, dataanalyzer, or datacollector]
 
 .PHONY: install
 install:
@@ -22,17 +22,41 @@ endif
 	cd ./applications/frontend && \
 	npm install
 
-.PHONY: test
-test:
+.PHONY: test/dataanalyzer
+test/dataanalyzer:
 ifeq ($(OS),Windows_NT)
 	.\.venv\Scripts\activate && \
-	pytest
+	pytest .\components\data_analyzer_test.py
 else
 	source .venv/bin/activate && \
-	pytest
+	pytest ./components/data_analyzer_test.py
 endif
 
-.PHONY: make run frontend
-run frontend:
+.PHONY: test
+test: test/dataanalyzer
+
+.PHONY: make run/frontend
+run/frontend:
 	cd ./applications/frontend && \
 	npm run dev
+
+.PHONY: make run/backend
+run/backend:
+ifeq ($(OS),Windows_NT)
+	.\.venv\Scripts\activate && \
+	uvicorn applications.backend.main:app --host 0.0.0.0 --port 8000
+else
+	source .venv/bin/activate && \
+	uvicorn applications.backend.main:app --host 0.0.0.0 --port 8000
+endif
+
+.PHONY: make run/dataanalyzer
+run/dataanalyzer:
+ifeq ($(OS),Windows_NT)
+	.\.venv\Scripts\activate && \
+	uvicorn applications.dataanalyzer.main:app --host 0.0.0.0 --port 8000
+else
+	source .venv/bin/activate && \
+	uvicorn applications.dataanalyzer.main:app --host 0.0.0.0 --port 8000
+endif
+

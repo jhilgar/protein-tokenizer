@@ -1,6 +1,5 @@
 import asyncio
 import urllib
-import datetime
 
 from sse_starlette.sse import EventSourceResponse
 from fastapi import Request

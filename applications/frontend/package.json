@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite build && vite preview --host 0.0.0.0 --port $PORT"
+    "preview": "vite build && serve dist -s -p ${PORT} -C",
+    "help": "serve --help"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -22,7 +23,8 @@
     "react-dom": "^18.2.0",
     "react-scroll-to-bottom": "^4.2.0",
     "semantic-ui-css": "^2.5.0",
-    "semantic-ui-react": "^2.1.5"
+    "semantic-ui-react": "^2.1.5",
+    "serve": "^14.2.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",
