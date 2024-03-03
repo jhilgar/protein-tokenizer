@@ -1,9 +1,6 @@
 import requests
-from uvicorn import Config
 
-from faststream.rabbit import TestRabbitBroker
-
-from components.models import SearchRequest, QueryResults
+from components.models import SearchRequest
 
 def test_search():
     url = 'http://localhost:8000/search'

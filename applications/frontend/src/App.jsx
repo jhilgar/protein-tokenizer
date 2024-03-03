@@ -12,28 +12,30 @@ import TextField from '@mui/material/TextField';
 function App() {
   const [searchResults, setSearchResults] = useState({ timestamp: '', query_id: '', num_results: 0 })
   const [tokenizerResults, setTokenizerResults] = useState(" ")
-  useEffect(() => {
-    const eventSource = new EventSource(import.meta.env.VITE_BACKEND_URL + "/stream");
-    eventSource.onopen = (m) => { "sse => connected", m };
-    eventSource.onerror = (e) => { console.error("sse => error connecting", e), eventSource.close() };
-    eventSource.onmessage = (m) => {
-      var data = JSON.parse(m.data)
-      console.log(new Date().toLocaleString() + " :: rabbitmq :: ", data.source + " => " + data.destination)
 
-      switch (data.source) {
-        case 'datacollector':
-          setSearchResults({
-            timestamp: new Date().toLocaleTimeString(),
-            query_id: data.query_id,
-            num_results: data.num_results
-          })
-        case 'dataanalyzer':
-          setTokenizerResults(data.tokenizer_json)
-      }
+  const eventSource = new EventSource(import.meta.env.VITE_BACKEND_URL + "/stream");
+  eventSource.addEventListener("open", (e) => {
+    console.log("SSE ping received.");
+  });
+  eventSource.addEventListener("error", (e) => {
+    console.log("SSE connection error.");
+  });
 
+  eventSource.addEventListener("message", (m) => {
+    var data = JSON.parse(m.data)
+    console.log(new Date().toLocaleString() + " :: rabbitmq :: ", data.source + " => " + data.destination)
+
+    switch (data.source) {
+      case 'datacollector':
+        setSearchResults({
+          timestamp: new Date().toLocaleTimeString(),
+          query_id: data.query_id,
+          num_results: data.num_results
+        })
+      case 'dataanalyzer':
+        setTokenizerResults(data.tokenizer_json)
     }
-    return () => eventSource.close();
-  })
+  });
 
   const [logs, setLogs] = useState([])
   useEffect(() => {
@@ -54,20 +56,20 @@ function App() {
   return (
     <>
       <Stack spacing={3}>
-          <div>
-            <a href="https://react.dev" target="_blank">
-              <img src={protein} className="logo react rotate" alt="Protein logo" />
-            </a>
-          </div>
-          <div>
-            protein tokenizer ::
-            <a href="github.com/jhilgar/protein-tokenizer"> github.com/jhilgar/protein-tokenizer</a> ::
-            u of colorado :: csca 5028 :: spring 1 :: final project
-          </div>
-          <center>
+        <div>
+          <a href="https://react.dev" target="_blank">
+            <img src={protein} className="logo react rotate" alt="Protein logo" />
+          </a>
+        </div>
+        <div>
+          protein tokenizer ::
+          <a href="github.com/jhilgar/protein-tokenizer"> github.com/jhilgar/protein-tokenizer</a> ::
+          u of colorado :: csca 5028 :: spring 1 :: final project
+        </div>
+        <center>
           <SearchCard entries={searchResults} />
-          </center>
-          <center>
+        </center>
+        <center>
           <TextField
             disabled
             id="outlined-multiline-static"
@@ -79,13 +81,11 @@ function App() {
             InputLabelProps={{ style: { fontSize: 12 } }}
             sx={{ width: "350px" }}
           />
-          </center>
-          <div id="logs" style={{ height: "100px", overflow: "auto" }}>
-            <Console logs={logs} variant="dark" />
-          </div>
-        
+        </center>
+        <div id="logs" style={{ height: "100px", overflow: "auto" }}>
+          <Console logs={logs} variant="dark" />
+        </div>
       </Stack>
-
     </>
   )
 }

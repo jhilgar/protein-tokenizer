@@ -8,12 +8,9 @@ Base = declarative_base()
 
 class DatabaseHandler():
     def __init__(self):
-        if not "DATABASE_URL" in os.environ:
-            url = "postgresql://tokenizer:tokenizer@localhost:5432/tokenizer"
-        else:
-            url = os.getenv("DATABASE_URL")
-            if url.startswith('postgres://'):
-                url = url.replace('postgres://', 'postgresql://')
+        url = os.getenv("DATABASE_URL")
+        if url.startswith('postgres://'):
+            url = url.replace('postgres://', 'postgresql://')
 
         self.engine = db.create_engine(url, echo = True)
 

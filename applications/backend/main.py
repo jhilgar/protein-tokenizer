@@ -13,9 +13,10 @@ messages = []
 num_messages_sent = pc.Counter("num_rabbit_sent", "The number of RabbitMQ messages sent.")
 num_messages_received = pc.Counter("num_rabbit_received", "The number of RabbitMQ messages received.")
 num_streaming_clients_active = pc.Gauge("num_streaming_clients_active", "The number of frontend clients connected to the backend.")
+
 app, router = setup_app()
 
-# todo write hooks for rabbit send/receive methods that automatically handle message logging/processing
+# todo write hooks for rabbit send/receive methods that automatically handle message logging
 
 @router.subscriber("backend_tokenizer_results")
 async def backend_tokenizer_results(message: TokenizerResults):
@@ -57,12 +58,12 @@ async def stream(message: Request):
                     break
                 if messages:
                     yield messages.pop(0).model_dump_json()
-                await asyncio.sleep(0.9)
+                await asyncio.sleep(0.5)
         except asyncio.CancelledError as e:
             num_streaming_clients_active.dec()
             raise e
             
-    return EventSourceResponse(event_generator(), ping = 1, send_timeout=10)
+    return EventSourceResponse(event_generator(), send_timeout=10)
 
 @app.get("/metrics")
 async def metrics():

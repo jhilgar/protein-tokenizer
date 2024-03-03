@@ -1,15 +1,15 @@
 import os
+
+from dotenv import load_dotenv
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from faststream.rabbit.fastapi import RabbitRouter
 
 def setup_app():
-    if not "CLOUDAMQP_URL" in os.environ:
-        url = 'amqp://guest:guest@localhost/'
-    else:
-        url = os.getenv("CLOUDAMQP_URL")
+    load_dotenv()
 
-    router = RabbitRouter(url)
+    router = RabbitRouter(os.getenv("CLOUDAMQP_URL"))
 
     app = FastAPI(lifespan = router.lifespan_context)
     app.include_router(router)

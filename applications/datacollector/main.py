@@ -16,6 +16,7 @@ handler.create_all()
 
 num_queries_submitted = pc.Counter("num_queries_submitted", "The number of queries submitted to UniProt.")
 num_query_results = pc.Counter("num_query_results", "The total number of result sequences fetched from UniProt.")
+
 @router.subscriber("datacollector_url")
 @router.publisher("backend_query_results")
 async def datacollector_url(message: SearchRequest) -> QueryResults:
