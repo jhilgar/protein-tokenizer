@@ -27,7 +27,7 @@ Note that the frontend, datacollector, and dataanalyzer need to be running to pe
 
 ## running
 
-- first start rabbitmq and postgres
+- first start rabbitmq, postgres, and prometheus
 
 `docker compose up`
 
@@ -42,6 +42,7 @@ Note that the frontend, datacollector, and dataanalyzer need to be running to pe
 `make run frontend`
 
 - navigate to the frontend web address
+- prometheus should be exposed at http://localhost:9090
 
 ## project info
 
