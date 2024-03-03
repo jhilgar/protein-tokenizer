@@ -6,7 +6,11 @@ default: help
 
 .PHONY: help
 help:
-	@echo commands: install, test/ or run/[frontend, backend, dataanalyzer, or datacollector]
+	@echo ---
+	@echo commands: install, test/[unit, integration] or run/[frontend, backend, dataanalyzer, or datacollector]
+	@echo ---
+	@echo NOTE: backend, dataanalyzer, and datacollector should be running to run test/integration
+	@echo ---
 
 .PHONY: install
 install:
@@ -22,18 +26,25 @@ endif
 	cd ./applications/frontend && \
 	npm install
 
-.PHONY: test/dataanalyzer
-test/dataanalyzer:
+.PHONY: test/unit
+test/unit:
 ifeq ($(OS),Windows_NT)
 	.\.venv\Scripts\activate && \
-	pytest .\components\data_analyzer_test.py
+	pytest .\components
 else
 	source .venv/bin/activate && \
-	pytest ./components/data_analyzer_test.py
+	pytest ./components
 endif
 
-.PHONY: test
-test: test/dataanalyzer
+.PHONY: test/integration
+test/integration:
+ifeq ($(OS),Windows_NT)
+	.\.venv\Scripts\activate && \
+	pytest .\applications
+else
+	source .venv/bin/activate && \
+	pytest ./applications
+endif
 
 .PHONY: make run/frontend
 run/frontend:
