@@ -17,6 +17,7 @@ A small web application developed as a requisite for a computer science course. 
 `make install`
 
 **tests**
+
 For unit tests:
 `make test/unit`
 
