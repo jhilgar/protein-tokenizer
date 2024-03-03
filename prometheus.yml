@@ -5,3 +5,13 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['host.docker.internal:8000']
+
+  - job_name: 'datacollector'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['host.docker.internal:8888']
+
+  - job_name: 'dataanalyzer'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['host.docker.internal:8080']
